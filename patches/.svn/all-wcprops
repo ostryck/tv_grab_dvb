@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/tv_grab_dvb/!svn/ver/48/trunk/patches
+END
+subtitle-char.patch
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/tv_grab_dvb/!svn/ver/48/trunk/patches/subtitle-char.patch
+END
+README
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/tv_grab_dvb/!svn/ver/48/trunk/patches/README
+END
+subtitle-pct.patch
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/tv_grab_dvb/!svn/ver/48/trunk/patches/subtitle-pct.patch
+END
