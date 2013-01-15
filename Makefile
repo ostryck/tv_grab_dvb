@@ -5,7 +5,7 @@
 CFLAGS=-Wall -O0 -g
 
 dvb_text := dvb_text.o
-dvb_text := dvb_text_iconv.o
+#dvb_text := dvb_text_iconv.o
 
 tv_grab_dvb:	tv_grab_dvb.o crc32.o lookup.o dvb_info_tables.o $(dvb_text) langidents.o
 tv_grab_dvb.o:  tv_grab_dvb.h si_tables.h

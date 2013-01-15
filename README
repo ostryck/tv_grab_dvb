@@ -10,6 +10,11 @@ DVB code Mercilessly ripped off from dvbdate
 
 NEWS
 ----
+
+15/01/2013 - Ver 0.11 Released
+
+  Fix for polish epg
+
 15/07/2004 - Ver 0.8 Released
 
   Restrict to now next options added for current/other multiplexes.

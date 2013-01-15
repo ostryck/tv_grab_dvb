@@ -1,6 +1,6 @@
 # Note that this is NOT a relocatable package
 Name: tv_grab_dvb
-Version: 0.10
+Version: 0.11
 Release: 1
 Summary: dump dvb epg info in xmltv
 URL: http://www.darkskiez.co.uk/index.php?page=tv_grab_dvb

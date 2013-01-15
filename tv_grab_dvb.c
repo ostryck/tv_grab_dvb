@@ -3,6 +3,9 @@
  * Version 0.2 - 20/04/2004 - First Public Release
  *
  * Copyright (C) 2004 Mark Bryars <dvb at darkskiez d0t co d0t uk>
+ * 
+ * Polish epg fix code ripped off from tvheadend/src/dvb/dvb_support.c
+ * Copyright (C) 2007 Andreas Öman
  *
  * DVB code Mercilessly ripped off from dvddate
  * dvbdate Copyright (C) Laurence Culhane 2002 <dvbdate@holmes.demon.co.uk>
@@ -228,7 +231,7 @@ static void parseEventDescription(void *data, enum ER round) {
 		assert(evtlen < sizeof(evt));
 		memcpy(evt, (char *)&evtdesc->data, evtlen);
 		evt[evtlen] = '\0';
-		printf("\t<title lang=\"%s\">%s</title>\n", xmllang(&evtdesc->lang_code1), xmlify(evt));
+		printf("\t<title lang=\"%s\">%s</title>\n", xmllang(&evtdesc->lang_code1), xmlify(evt,evtlen));
 		return;
 	}
 
@@ -239,7 +242,7 @@ static void parseEventDescription(void *data, enum ER round) {
 		dsc[dsclen] = '\0';
 
 		if (*dsc) {
-			char *d = xmlify(dsc);
+			char *d = xmlify(dsc,dsclen);
 			if (d && *d)
 				printf("\t<sub-title lang=\"%s\">%s</sub-title>\n", xmllang(&evtdesc->lang_code1), d);
 		}
@@ -265,7 +268,7 @@ void parseLongEventDescription(void *data) {
 		assert(name_len < sizeof(dsc));
 		memcpy(dsc, (char *)&name->data, name_len);
 		dsc[name_len] = '\0';
-		printf("%s: ", xmlify(dsc));
+		printf("%s: ", xmlify(dsc, name_len));
 
 		p += ITEM_EXTENDED_EVENT_LEN + name_len;
 
@@ -275,7 +278,7 @@ void parseLongEventDescription(void *data) {
 		assert(value_len < sizeof(dsc));
 		memcpy(dsc, (char *)&value->data, value_len);
 		dsc[value_len] = '\0';
-		printf("%s; ", xmlify(dsc));
+		printf("%s; ", xmlify(dsc, value_len));
 
 		p += ITEM_EXTENDED_EVENT_LEN + value_len;
 	}
@@ -285,7 +288,7 @@ void parseLongEventDescription(void *data) {
 		assert(len < sizeof(dsc));
 		memcpy(dsc, (char *)&text->data, len);
 		dsc[len] = '\0';
-		printf("%s", xmlify(dsc));
+		printf("%s", xmlify(dsc,len));
 	}
 
 	//printf("/%d/%d/%s", levt->descriptor_number, levt->last_descriptor_number, xmlify(dsc));
@@ -459,7 +462,7 @@ void parseContentIdentifierDescription(void *data) {
 			memcpy(buf, (char *)&crid_data->crid_byte, cridlen);
 			buf[cridlen] = '\0';
 
-			printf("\t<crid type='%s'>%s</crid>\n", type, xmlify(buf));
+			printf("\t<crid type='%s'>%s</crid>\n", type, xmlify(buf,cridlen));
 			crid_length = 2 + crid_data->crid_length;
 			break;
 		case 0x01: /* Carried in Content Identifier Table (CIT) */
@@ -824,7 +827,7 @@ static void readZapInfo() {
 			int chanid = atoi(id);
             if (chanid) { 
                 printf("<channel id=\"%s\">\n", get_channelident(chanid));
-                printf("\t<display-name>%s</display-name>\n", xmlify(buf));
+                printf("\t<display-name>%s</display-name>\n", xmlify(buf,256));
                 printf("</channel>\n");
             }
 		}
