@@ -804,6 +804,8 @@ static int openInput(void) {
 	return 0;
 } /*}}}*/
 
+/* See descriptoon of channel.xml http://www.linuxtv.org/wiki/index.php/Dvbscan  */
+
 /* Read [cst]zap channels.conf file and print as XMLTV channel info. {{{ */
 static void readZapInfo() {
 	FILE *fd_zap;
@@ -813,14 +815,15 @@ static void readZapInfo() {
 		return;
 	}
 
-	/* name:freq:inversion:symbol_rate:fec:quant:vid:aid:chanid:... */
+	//
+	
 	while (fgets(buf, sizeof(buf), fd_zap)) {
 		int i = 0;
 		char *c, *id = NULL;
 		for (c = buf; *c; c++)
 			if (*c == ':') {
 				*c = '\0';
-				if (++i == 8) /* chanid */
+				if (++i == 9) /* chanid */
 					id = c + 1;
 			}
 		if (id && *id) {
